@@ -104,7 +104,7 @@ export default defineModule({
 | `defineChannel<T>(key)`, `useChannel(channel)` | `api.channels` for one key, typed with what is published on it (`publish`, `subscribe`, `get`), and its value in a component, drawn again when it changes |
 | `type ClientModuleApi`, `ClientModuleWindowProps`, ... | The API's types (`src/api.d.ts`) |
 | `type ClientModuleMessageOf<typeof schema>` | A plugin message's data, typed from its schema written `as const` (`ClientModuleMessageSchema`, the JSON `client.messages` sends) |
-| `@nitrodevco/client-module-sdk/theme` | `Box`, `Button`, `Frame`, `Region`, `RichText`, `ThemeText`, `TemplateWindow`: the client's own, read from `NitroClientModuleHost` as the module loads; their props typed with what a module passes (`src/theme-types.d.ts`) |
+| `@nitrodevco/client-module-sdk/theme` | `Box`, `Button`, `Frame`, `Region`, `RichText`, `ThemeText`, `TemplateWindow`: the client's own, read from `NitroClientModuleHost` as the module loads; their props typed with what a module passes (`src/theme-types.d.ts`); a `Button` takes a `tooltip` shown on hover, as the client's own do |
 | `@nitrodevco/client-module-sdk/build` | `clientModuleBuildOptions({ entry, outfile, minify? })` for esbuild, and `clientModuleHostPlugin()` |
 
 The build preset bundles everything into the one file except `react`, `react/jsx-runtime` and

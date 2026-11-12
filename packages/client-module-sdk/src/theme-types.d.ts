@@ -65,6 +65,12 @@ export interface ClientModuleButtonProps extends ClientModulePointerProps {
     variant?: string;
     layout?: ClientModuleLayout;
     disabled?: boolean;
+    /** Shown on hover, as the client's own buttons show theirs (Flash `tool_tip_caption`). */
+    tooltip?: string;
+    /** How long the pointer rests before `tooltip` shows, in ms; the client's 500 when left out. */
+    tooltipDelay?: number;
+    /** `#rrggbb`: the button's colour over its variant's (a red "remove", say), as the client tints its own. */
+    tintColor?: string;
     children?: ReactNode;
 }
 
