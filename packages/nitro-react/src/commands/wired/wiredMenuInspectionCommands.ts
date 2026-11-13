@@ -170,7 +170,7 @@ export const pollWiredInspection = (send: Send) => {
 
 /** `onWiredVariablesForObject` - an answer for another source type than the selected one is dropped. */
 export const onWiredVariablesForObject = (send: Send, data: IWiredObjectInspectionData) => {
-    const { menuInitialized, inspectionState, inspectionType, inspectionData, inspectionVariablesById } = wiredStore.getState();
+    const { menuInitialized, inspectionState, inspectionType, inspectionData } = wiredStore.getState();
 
     if (!menuInitialized) return;
     if ((inspectionState !== WIRED_INSPECTION_STATE_FETCHING) && (inspectionState !== WIRED_INSPECTION_STATE_DISPLAYING)) return;
@@ -180,10 +180,11 @@ export const onWiredVariablesForObject = (send: Send, data: IWiredObjectInspecti
     onDataChanged(inspectionData, data);
     patch({ inspectionState: WIRED_INSPECTION_STATE_AWAITING_VARIABLES });
 
-    // `allVariablesAvailable`: a variable the tab has never seen means the cache has to be refreshed.
-    const allVariablesAvailable = [ ...data.variableValues.keys() ].every(variableId => !!inspectionVariablesById[variableId]);
-
-    getAllWiredVariables(send, onInspectionVariables, !allVariablesAvailable);
+    // Always checked against the room's variables hash (one request at most every REQUEST_OFFSET_MS):
+    // a variable a box has just been changed to give a value to, or to write to, is the same variable
+    // id with other flags, which "every id is cached" does not see, and the table showed its value
+    // blank until another tab was opened.
+    getAllWiredVariables(send, onInspectionVariables, true);
 };
 
 /** `onWiredMenuError` - a failed inspection takes a fetch that is still out back to nothing. */
